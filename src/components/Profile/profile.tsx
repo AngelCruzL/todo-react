@@ -2,9 +2,11 @@ import { FC, ReactElement } from 'react';
 import { Avatar, Box, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 
-const Profile: FC = (props: any): ReactElement => {
-  const { name } = props;
+type Profile = {
+  name: string;
+};
 
+const Profile: FC<Profile> = ({ name }): ReactElement => {
   return (
     <Box
       display="flex"

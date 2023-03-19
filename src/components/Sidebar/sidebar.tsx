@@ -1,6 +1,7 @@
 import { FC, ReactElement } from 'react';
-
 import { Grid } from '@mui/material';
+
+import { Profile } from '../Profile';
 
 const Sidebar: FC = (): ReactElement => {
   return (
@@ -20,7 +21,7 @@ const Sidebar: FC = (): ReactElement => {
         backgroundColor: 'background.paper',
       }}
     >
-      <h2>Side Bar</h2>
+      <Profile />
     </Grid>
   );
 };

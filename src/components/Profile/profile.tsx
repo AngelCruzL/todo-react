@@ -1,7 +1,10 @@
 import { FC, ReactElement } from 'react';
 import { Avatar, Box, Typography } from '@mui/material';
+import PropTypes from 'prop-types';
 
-const Profile: FC = (): ReactElement => {
+const Profile: FC = (props: any): ReactElement => {
+  const { name } = props;
+
   return (
     <Box
       display="flex"
@@ -18,12 +21,12 @@ const Profile: FC = (): ReactElement => {
         }}
       >
         <Typography variant="h4" color="text.primary">
-          Á
+          {name[0].toUpperCase()}
         </Typography>
       </Avatar>
 
       <Typography variant="h6" color="text.primary">
-        Welcome Ángel Cruz
+        Welcome {name}
       </Typography>
 
       <Typography variant="body1" color={'text.primary'}>
@@ -31,6 +34,10 @@ const Profile: FC = (): ReactElement => {
       </Typography>
     </Box>
   );
+};
+
+Profile.propTypes = {
+  name: PropTypes.string.isRequired,
 };
 
 export default Profile;

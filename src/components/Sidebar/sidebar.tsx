@@ -21,7 +21,7 @@ const Sidebar: FC = (): ReactElement => {
         backgroundColor: 'background.paper',
       }}
     >
-      <Profile />
+      <Profile name={'Ángel Cruz'} />
     </Grid>
   );
 };

@@ -22,7 +22,11 @@ const Profile: FC<Profile> = ({ name }): ReactElement => {
           backgroundColor: 'primary.main',
         }}
       >
-        <Typography variant="h4" color="text.primary">
+        <Typography
+          variant="h4"
+          color="text.primary"
+          data-testid="avatar"
+        >
           {name[0].toUpperCase()}
         </Typography>
       </Avatar>

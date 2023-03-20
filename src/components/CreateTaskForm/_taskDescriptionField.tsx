@@ -1,7 +1,12 @@
 import { FC, ReactElement } from 'react';
 import { TextField } from '@mui/material';
 
-const _TaskDescriptionField: FC = (): ReactElement => {
+import { ITextField } from './interfaces';
+
+const _TaskDescriptionField: FC<ITextField> = ({
+  onChange = (e) => console.log(e.target.value),
+  disabled = false,
+}): ReactElement => {
   return (
     <TextField
       id="description"
@@ -13,6 +18,8 @@ const _TaskDescriptionField: FC = (): ReactElement => {
       fullWidth
       multiline
       rows={4}
+      disabled={disabled}
+      onChange={onChange}
     />
   );
 };

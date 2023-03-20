@@ -1,7 +1,12 @@
 import { FC, ReactElement } from 'react';
 import { TextField } from '@mui/material';
 
-const _TaskTitleField: FC = (): ReactElement => {
+import { ITextField } from './interfaces';
+
+const _TaskTitleField: FC<ITextField> = ({
+  onChange = (e) => console.log(e.target.value),
+  disabled = false,
+}): ReactElement => {
   return (
     <TextField
       id="title"
@@ -11,6 +16,8 @@ const _TaskTitleField: FC = (): ReactElement => {
       size="small"
       name="title"
       fullWidth
+      disabled={disabled}
+      onChange={onChange}
     />
   );
 };

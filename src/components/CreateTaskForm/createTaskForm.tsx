@@ -4,6 +4,7 @@ import { Box, Stack, Typography } from '@mui/material';
 import _TaskTitleField from './_taskTitleField';
 import _TaskDescriptionField from './_taskDescriptionField';
 import _TaskDateField from './_taskDateField';
+import _TaskSelectField from './_taskSelectField';
 
 const CreateTaskForm: FC = (): ReactElement => {
   return (
@@ -23,6 +24,15 @@ const CreateTaskForm: FC = (): ReactElement => {
         <_TaskTitleField />
         <_TaskDescriptionField />
         <_TaskDateField />
+
+        <Stack
+          direction="row"
+          spacing={2}
+          sx={{ inlineSize: '100%' }}
+        >
+          <_TaskSelectField />
+          <_TaskSelectField />
+        </Stack>
       </Stack>
     </Box>
   );

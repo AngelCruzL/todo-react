@@ -5,6 +5,7 @@ import {
   MenuItem,
   Select,
 } from '@mui/material';
+import PropTypes from 'prop-types';
 
 import { ISelectField } from './interfaces';
 
@@ -37,6 +38,20 @@ const _TaskSelectField: FC<ISelectField> = ({
       </Select>
     </FormControl>
   );
+};
+
+_TaskSelectField.propTypes = {
+  disabled: PropTypes.bool,
+  value: PropTypes.string,
+  onChange: PropTypes.func,
+  name: PropTypes.string,
+  label: PropTypes.string,
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+    }).isRequired,
+  ),
 };
 
 export default _TaskSelectField;

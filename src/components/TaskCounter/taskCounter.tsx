@@ -1,7 +1,18 @@
 import { FC, ReactElement } from 'react';
 import { Avatar, Box, Typography } from '@mui/material';
+import propTypes from 'prop-types';
 
-const TaskCounter: FC = (): ReactElement => {
+import { ITaskCounter } from './interfaces/ITaskCounter';
+import { Status } from '../CreateTaskForm/enums';
+import {
+  emitCorrectBorderColor,
+  emitCorrectLabel,
+} from './helpers';
+
+const TaskCounter: FC<ITaskCounter> = ({
+  status = Status.todo,
+  count = 0,
+}): ReactElement => {
   return (
     <>
       <Box
@@ -16,12 +27,14 @@ const TaskCounter: FC = (): ReactElement => {
             blockSize: '6rem',
             inlineSize: '6rem',
             border: '5px solid',
-            borderColor: 'warning.light',
+            borderColor: `${emitCorrectBorderColor(
+              status,
+            )}`,
             backgroundColor: 'transparent',
           }}
         >
           <Typography color="#fff" variant="h4">
-            10
+            {count}
           </Typography>
         </Avatar>
         <Typography
@@ -30,11 +43,20 @@ const TaskCounter: FC = (): ReactElement => {
           fontSize="20px"
           variant="h5"
         >
-          Subtitle
+          {emitCorrectLabel(status)}
         </Typography>
       </Box>
     </>
   );
+};
+
+TaskCounter.propTypes = {
+  count: propTypes.number,
+  status: propTypes.oneOf([
+    Status.todo,
+    Status.inProgress,
+    Status.completed,
+  ]),
 };
 
 export default TaskCounter;

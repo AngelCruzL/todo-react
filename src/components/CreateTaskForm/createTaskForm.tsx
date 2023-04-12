@@ -1,4 +1,4 @@
-import { FC, ReactElement } from 'react';
+import { FC, ReactElement, useState } from 'react';
 import { Box, Stack, Typography } from '@mui/material';
 
 import _TaskTitleField from './_taskTitleField';
@@ -8,6 +8,15 @@ import _TaskSelectField from './_taskSelectField';
 import { Priority, Status } from './enums';
 
 const CreateTaskForm: FC = (): ReactElement => {
+  const [title, setTitle] = useState<string>('');
+  const [description, setDescription] =
+    useState<string>('');
+  const [date, setDate] = useState<Date | null>(new Date());
+  const [status, setStatus] = useState<string>(Status.todo);
+  const [priority, setPriority] = useState<string>(
+    Priority.normal,
+  );
+
   return (
     <Box
       display="flex"
@@ -22,9 +31,16 @@ const CreateTaskForm: FC = (): ReactElement => {
       </Typography>
 
       <Stack spacing={2} width="100%">
-        <_TaskTitleField />
-        <_TaskDescriptionField />
-        <_TaskDateField />
+        <_TaskTitleField
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <_TaskDescriptionField
+          onChange={(e) => setDescription(e.target.value)}
+        />
+        <_TaskDateField
+          value={date}
+          onChange={(date) => setDate(date)}
+        />
 
         <Stack
           direction="row"
@@ -34,6 +50,8 @@ const CreateTaskForm: FC = (): ReactElement => {
           <_TaskSelectField
             label="Status"
             name="status"
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
             items={[
               {
                 value: Status.todo,
@@ -49,6 +67,8 @@ const CreateTaskForm: FC = (): ReactElement => {
           <_TaskSelectField
             label="Priority"
             name="priority"
+            value={priority}
+            onChange={(e) => setPriority(e.target.value)}
             items={[
               {
                 value: Priority.low,

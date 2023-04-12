@@ -1,4 +1,4 @@
-import { FC, ReactElement } from 'react';
+import React, { FC, ReactElement } from 'react';
 import {
   Alert,
   Box,
@@ -6,13 +6,17 @@ import {
   LinearProgress,
 } from '@mui/material';
 import { format } from 'date-fns';
-import { useQuery } from '@tanstack/react-query';
+import {
+  useMutation,
+  useQuery,
+} from '@tanstack/react-query';
 
 import { sendApiRequest } from '@helpers/sendApiRequest';
 import { ITaskApi } from './interfaces';
 import { TaskCounter } from '../TaskCounter';
 import Task from '../Task/task';
 import { Priority, Status } from '../CreateTaskForm/enums';
+import { IUpdateTask } from '../CreateTaskForm/interfaces';
 
 const TaskArea: FC = (): ReactElement => {
   const baseUrl = import.meta.env.VITE_API_URL;
@@ -26,6 +30,23 @@ const TaskArea: FC = (): ReactElement => {
       );
     },
   );
+
+  const updateTaskMutation = useMutation(
+    (data: IUpdateTask) =>
+      sendApiRequest(`${baseUrl}/tasks`, 'PUT', data),
+  );
+
+  function onStatusChangeHandler(
+    event: React.ChangeEvent<HTMLInputElement>,
+    id: string,
+  ) {
+    updateTaskMutation.mutate({
+      id,
+      status: event.target.checked
+        ? Status.inProgress
+        : Status.todo,
+    });
+  }
 
   return (
     <Grid item md={8} px={4}>
@@ -95,6 +116,7 @@ const TaskArea: FC = (): ReactElement => {
                   date={new Date(task.date)}
                   status={task.status as Status}
                   priority={task.priority as Priority}
+                  onStatusChange={onStatusChangeHandler}
                 />
               ) : null;
             })

@@ -27,7 +27,8 @@ const _TaskFooter: FC<ITaskFooter> = ({
         control={
           <Switch
             color="warning"
-            onChange={onStatusChange}
+            onChange={(e) => onStatusChange(e, id)}
+            defaultChecked={status === Status.inProgress}
           />
         }
         label="In Progress"
@@ -38,7 +39,7 @@ const _TaskFooter: FC<ITaskFooter> = ({
         color="success"
         size="small"
         sx={{ color: '#fff' }}
-        onClick={onClick}
+        onClick={(e) => onClick(e, id)}
       >
         Mark as Complete
       </Button>

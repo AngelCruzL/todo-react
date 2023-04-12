@@ -8,12 +8,18 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
+import { useMutation } from '@tanstack/react-query';
+
+import { sendApiRequest } from '@helpers/sendApiRequest';
+import { ICreateTask } from '../TaskArea/interfaces';
 
 import _TaskTitleField from './_taskTitleField';
 import _TaskDescriptionField from './_taskDescriptionField';
 import _TaskDateField from './_taskDateField';
 import _TaskSelectField from './_taskSelectField';
 import { Priority, Status } from './enums';
+
+const baseUrl = import.meta.env.VITE_API_URL;
 
 const CreateTaskForm: FC = (): ReactElement => {
   const [title, setTitle] = useState<string>('');
@@ -24,6 +30,25 @@ const CreateTaskForm: FC = (): ReactElement => {
   const [priority, setPriority] = useState<string>(
     Priority.normal,
   );
+
+  const createTaskMutation = useMutation(
+    (data: ICreateTask) =>
+      sendApiRequest(`${baseUrl}/tasks`, 'POST', data),
+  );
+
+  function createTaskHandler() {
+    if (!title || !description) return;
+
+    const newTask: ICreateTask = {
+      title,
+      description,
+      date: date!.toISOString(),
+      status,
+      priority,
+    };
+
+    createTaskMutation.mutate(newTask);
+  }
 
   return (
     <Box
@@ -108,7 +133,12 @@ const CreateTaskForm: FC = (): ReactElement => {
 
         <LinearProgress />
 
-        <Button variant="contained" size="large" fullWidth>
+        <Button
+          onClick={createTaskHandler}
+          variant="contained"
+          size="large"
+          fullWidth
+        >
           Create Task
         </Button>
       </Stack>

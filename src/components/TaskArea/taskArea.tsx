@@ -48,6 +48,18 @@ const TaskArea: FC = (): ReactElement => {
     });
   }
 
+  function markCompletedHandler(
+    event:
+      | React.MouseEvent<HTMLButtonElement>
+      | React.MouseEvent<HTMLAnchorElement>,
+    id: string,
+  ) {
+    updateTaskMutation.mutate({
+      id,
+      status: Status.completed,
+    });
+  }
+
   return (
     <Grid item md={8} px={4}>
       <Box mb={8} px={4}>
@@ -117,6 +129,7 @@ const TaskArea: FC = (): ReactElement => {
                   status={task.status as Status}
                   priority={task.priority as Priority}
                   onStatusChange={onStatusChangeHandler}
+                  onClick={markCompletedHandler}
                 />
               ) : null;
             })

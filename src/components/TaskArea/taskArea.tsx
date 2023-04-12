@@ -1,4 +1,9 @@
-import React, { FC, ReactElement } from 'react';
+import React, {
+  FC,
+  ReactElement,
+  useContext,
+  useEffect,
+} from 'react';
 import {
   Alert,
   Box,
@@ -18,8 +23,13 @@ import Task from '../Task/task';
 import { Priority, Status } from '../CreateTaskForm/enums';
 import { IUpdateTask } from '../CreateTaskForm/interfaces';
 import { countTasks } from '@helpers/countTasks';
+import { TaskStatusChangedContext } from '@context/TaskStatusChangedContext';
 
 const TaskArea: FC = (): ReactElement => {
+  const taskUpdatedContext = useContext(
+    TaskStatusChangedContext,
+  );
+
   const baseUrl = import.meta.env.VITE_API_URL;
 
   const { error, isLoading, data, refetch } = useQuery(
@@ -36,6 +46,16 @@ const TaskArea: FC = (): ReactElement => {
     (data: IUpdateTask) =>
       sendApiRequest(`${baseUrl}/tasks`, 'PUT', data),
   );
+
+  useEffect(() => {
+    refetch();
+  }, [taskUpdatedContext.updated]);
+
+  useEffect(() => {
+    if (updateTaskMutation.isSuccess) {
+      taskUpdatedContext.toggle();
+    }
+  }, [updateTaskMutation.isSuccess]);
 
   function onStatusChangeHandler(
     event: React.ChangeEvent<HTMLInputElement>,

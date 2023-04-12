@@ -1,6 +1,7 @@
 import {
   FC,
   ReactElement,
+  useContext,
   useEffect,
   useState,
 } from 'react';
@@ -23,6 +24,7 @@ import _TaskDescriptionField from './_taskDescriptionField';
 import _TaskDateField from './_taskDateField';
 import _TaskSelectField from './_taskSelectField';
 import { Priority, Status } from './enums';
+import { TaskStatusChangedContext } from '@context/TaskStatusChangedContext';
 
 const baseUrl = import.meta.env.VITE_API_URL;
 
@@ -37,6 +39,10 @@ const CreateTaskForm: FC = (): ReactElement => {
   );
   const [showSuccessAlert, setShowSuccessAlert] =
     useState<boolean>(false);
+
+  const taskUpdatedContext = useContext(
+    TaskStatusChangedContext,
+  );
 
   const createTaskMutation = useMutation(
     (data: ICreateTask) =>
@@ -60,6 +66,7 @@ const CreateTaskForm: FC = (): ReactElement => {
   useEffect(() => {
     if (createTaskMutation.isSuccess) {
       setShowSuccessAlert(true);
+      taskUpdatedContext.toggle();
     }
 
     const successAlertTimeout = setTimeout(() => {

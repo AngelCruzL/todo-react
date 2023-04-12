@@ -8,8 +8,11 @@ import {
 import PropTypes from 'prop-types';
 
 import { ITaskFooter } from './interfaces/ITaskFooter';
+import { Status } from '../CreateTaskForm/enums';
 
 const _TaskFooter: FC<ITaskFooter> = ({
+  id,
+  status = Status.todo,
   onClick = console.log,
   onStatusChange = console.log,
 }): ReactElement => {
@@ -46,6 +49,12 @@ const _TaskFooter: FC<ITaskFooter> = ({
 _TaskFooter.propTypes = {
   onClick: PropTypes.func,
   onStatusChange: PropTypes.func,
+  id: PropTypes.string.isRequired,
+  status: PropTypes.oneOf([
+    Status.todo,
+    Status.inProgress,
+    Status.completed,
+  ]),
 };
 
 export default _TaskFooter;

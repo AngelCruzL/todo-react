@@ -57,9 +57,10 @@ const TaskArea: FC = (): ReactElement => {
           md={8}
           xs={10}
         >
-          <Task />
-          <Task />
-          <Task />
+          {/*TODO: Fix the id's*/}
+          <Task id="test" />
+          <Task id="test" />
+          <Task id="test" />
         </Grid>
       </Grid>
     </Grid>

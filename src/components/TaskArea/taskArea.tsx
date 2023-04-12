@@ -17,6 +17,7 @@ import { TaskCounter } from '../TaskCounter';
 import Task from '../Task/task';
 import { Priority, Status } from '../CreateTaskForm/enums';
 import { IUpdateTask } from '../CreateTaskForm/interfaces';
+import { countTasks } from '@helpers/countTasks';
 
 const TaskArea: FC = (): ReactElement => {
   const baseUrl = import.meta.env.VITE_API_URL;
@@ -84,9 +85,32 @@ const TaskArea: FC = (): ReactElement => {
           xs={12}
           mb={8}
         >
-          <TaskCounter />
-          <TaskCounter />
-          <TaskCounter />
+          <TaskCounter
+            count={
+              data
+                ? countTasks(data, Status.todo)
+                : undefined
+            }
+            status={Status.todo}
+          />
+
+          <TaskCounter
+            count={
+              data
+                ? countTasks(data, Status.inProgress)
+                : undefined
+            }
+            status={Status.inProgress}
+          />
+
+          <TaskCounter
+            count={
+              data
+                ? countTasks(data, Status.completed)
+                : undefined
+            }
+            status={Status.completed}
+          />
         </Grid>
 
         {/*@ts-ignore*/}

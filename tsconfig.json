@@ -3,6 +3,9 @@
     "target": "ESNext",
     "baseUrl": "src",
     "paths": {
+      "@context/*": [
+        "context/*"
+      ],
       "@helpers/*": [
         "helpers/*"
       ],

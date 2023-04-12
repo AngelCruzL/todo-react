@@ -1,1 +1,5 @@
-export const rootContext = [];
+import { TaskStatusChangedContextProvider } from './TaskStatusChangedContext';
+
+export const rootContext = [
+  TaskStatusChangedContextProvider,
+];

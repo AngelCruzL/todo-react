@@ -1,6 +1,12 @@
 {
   "compilerOptions": {
     "target": "ESNext",
+    "baseUrl": "src",
+    "paths": {
+      "@helpers/*": [
+        "helpers/*"
+      ],
+    },
     "useDefineForClassFields": true,
     "lib": [
       "DOM",

@@ -1,4 +1,9 @@
-import { FC, ReactElement, useState } from 'react';
+import {
+  FC,
+  ReactElement,
+  useEffect,
+  useState,
+} from 'react';
 import {
   Alert,
   AlertTitle,
@@ -30,6 +35,8 @@ const CreateTaskForm: FC = (): ReactElement => {
   const [priority, setPriority] = useState<string>(
     Priority.normal,
   );
+  const [showSuccessAlert, setShowSuccessAlert] =
+    useState<boolean>(false);
 
   const createTaskMutation = useMutation(
     (data: ICreateTask) =>
@@ -50,6 +57,18 @@ const CreateTaskForm: FC = (): ReactElement => {
     createTaskMutation.mutate(newTask);
   }
 
+  useEffect(() => {
+    if (createTaskMutation.isSuccess) {
+      setShowSuccessAlert(true);
+    }
+
+    const successAlertTimeout = setTimeout(() => {
+      setShowSuccessAlert(false);
+    }, 7000);
+
+    return () => clearTimeout(successAlertTimeout);
+  }, [createTaskMutation.isSuccess]);
+
   return (
     <Box
       display="flex"
@@ -59,17 +78,19 @@ const CreateTaskForm: FC = (): ReactElement => {
       px={4}
       my={6}
     >
-      <Alert
-        severity="success"
-        sx={{
-          inlineSize: '100%',
-          marginBlockEnd: '1rem',
-          color: 'white',
-        }}
-      >
-        <AlertTitle>Success</AlertTitle>
-        The task was created successfully
-      </Alert>
+      {showSuccessAlert && (
+        <Alert
+          severity="success"
+          sx={{
+            inlineSize: '100%',
+            marginBlockEnd: '1rem',
+            color: 'white',
+          }}
+        >
+          <AlertTitle>Success</AlertTitle>
+          The task was created successfully
+        </Alert>
+      )}
 
       <Typography mb={2} variant="h6" component="h2">
         Create A Task

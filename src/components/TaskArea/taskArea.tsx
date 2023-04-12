@@ -1,5 +1,5 @@
 import { FC, ReactElement } from 'react';
-import { Box, Grid } from '@mui/material';
+import { Alert, Box, Grid } from '@mui/material';
 import { format } from 'date-fns';
 import { useQuery } from '@tanstack/react-query';
 
@@ -50,6 +50,7 @@ const TaskArea: FC = (): ReactElement => {
           <TaskCounter />
         </Grid>
 
+        {/*@ts-ignore*/}
         <Grid
           item
           display="flex"
@@ -57,10 +58,31 @@ const TaskArea: FC = (): ReactElement => {
           md={8}
           xs={10}
         >
-          {/*TODO: Fix the id's*/}
-          <Task id="test" />
-          <Task id="test" />
-          <Task id="test" />
+          {error && (
+            <Alert severity="error">
+              There was an error fetching your tasks.
+            </Alert>
+          )}
+
+          {!error &&
+            Array.isArray(data) &&
+            data.length === 0 && (
+              <Alert severity="warning">
+                You have no tasks yet. Start by creating
+                one.
+              </Alert>
+            )}
+
+          {!error &&
+            Array.isArray(data) &&
+            data.length > 0 && (
+              <>
+                {/*TODO: Fix the id's*/}
+                <Task id="test" />
+                <Task id="test" />
+                <Task id="test" />
+              </>
+            )}
         </Grid>
       </Grid>
     </Grid>

@@ -28,7 +28,7 @@ const _TaskFooter: FC<ITaskFooter> = ({
           <Switch
             color="warning"
             onChange={(e) => onStatusChange(e, id)}
-            defaultChecked={status === Status.inProgress}
+            checked={status === Status.inProgress}
           />
         }
         label="In Progress"

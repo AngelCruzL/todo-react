@@ -1,5 +1,10 @@
 import { FC, ReactElement } from 'react';
-import { Alert, Box, Grid } from '@mui/material';
+import {
+  Alert,
+  Box,
+  Grid,
+  LinearProgress,
+} from '@mui/material';
 import { format } from 'date-fns';
 import { useQuery } from '@tanstack/react-query';
 
@@ -7,6 +12,7 @@ import { sendApiRequest } from '@helpers/sendApiRequest';
 import { ITaskApi } from './interfaces';
 import { TaskCounter } from '../TaskCounter';
 import Task from '../Task/task';
+import { Priority, Status } from '../CreateTaskForm/enums';
 
 const TaskArea: FC = (): ReactElement => {
   const baseUrl = import.meta.env.VITE_API_URL;
@@ -73,16 +79,26 @@ const TaskArea: FC = (): ReactElement => {
               </Alert>
             )}
 
-          {!error &&
+          {isLoading ? (
+            <LinearProgress />
+          ) : (
             Array.isArray(data) &&
-            data.length > 0 && (
-              <>
-                {/*TODO: Fix the id's*/}
-                <Task id="test" />
-                <Task id="test" />
-                <Task id="test" />
-              </>
-            )}
+            data.length > 0 &&
+            data.map((task) => {
+              return task.status === Status.todo ||
+                task.status === Status.inProgress ? (
+                <Task
+                  id={task.id}
+                  key={task.id}
+                  title={task.title}
+                  description={task.description}
+                  date={new Date(task.date)}
+                  status={task.status as Status}
+                  priority={task.priority as Priority}
+                />
+              ) : null;
+            })
+          )}
         </Grid>
       </Grid>
     </Grid>

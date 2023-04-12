@@ -1,11 +1,26 @@
 import { FC, ReactElement } from 'react';
 import { Box, Grid } from '@mui/material';
 import { format } from 'date-fns';
+import { useQuery } from '@tanstack/react-query';
 
+import { sendApiRequest } from '@helpers/sendApiRequest';
+import { ITaskApi } from './interfaces';
 import { TaskCounter } from '../TaskCounter';
 import Task from '../Task/task';
 
 const TaskArea: FC = (): ReactElement => {
+  const baseUrl = import.meta.env.VITE_API_URL;
+
+  const { error, isLoading, data, refetch } = useQuery(
+    ['tasks'],
+    async () => {
+      return await sendApiRequest<ITaskApi[]>(
+        `${baseUrl}/tasks`,
+        'GET',
+      );
+    },
+  );
+
   return (
     <Grid item md={8} px={4}>
       <Box mb={8} px={4}>

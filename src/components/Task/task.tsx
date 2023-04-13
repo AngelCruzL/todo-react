@@ -10,6 +10,7 @@ import { Priority, Status } from '../CreateTaskForm/enums';
 import { renderPriorityBorderColor } from './helpers/renderPriorityBorderColor';
 
 const Task: FC<ITask> = ({
+  id,
   title = 'Test Title',
   description = 'Lorem ipsum dolor sit amet consectetur',
   date = new Date(),
@@ -36,6 +37,8 @@ const Task: FC<ITask> = ({
       <_TaskHeader title={title} date={date} />
       <_TaskDescription description={description} />
       <_TaskFooter
+        id={id}
+        status={status}
         onClick={onClick}
         onStatusChange={onStatusChange}
       />

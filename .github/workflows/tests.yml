@@ -12,4 +12,4 @@ jobs:
       - name: Install dependencies
         uses: bahmutov/npm-install@v1
       - name: Run tests
-        run: npm test
+        run: npm t

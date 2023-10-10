@@ -1,5 +1,7 @@
 # TODO App - React
 
+[![Deploy](https://github.com/AngelCruzL/todo-react/actions/workflows/deploy.yml/badge.svg)](https://github.com/AngelCruzL/todo-react/actions/workflows/deploy.yml)
+
 This is a simple TODO app built with React with TypeScript to practice the integration with React Query, Material UI and
 Vitest.
 
